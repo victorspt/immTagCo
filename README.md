@@ -29,3 +29,19 @@ named "plugin".
 "plugin" folder created in the previous step. The path to the main plugin 
 file should look like ".vim/pack/plugins/start/immTagCo/plugin/immTagCo.vim".
 
+## How to Use
+
+The plugin automatically adds the closing tag for HTML elements as soon as 
+the opening tag is written.
+
+### Options
+
+There are a few global variables in Vim that control how the plugin behaves.
+
+`g:turn_immTagCo_on`
+
+Default value: "1"
+
+This variable is used to turn the plugin on when it is assigned the value of 
+"1" or to turn it off when assigned the value of "0".
+
