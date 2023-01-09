@@ -8,7 +8,7 @@ opening tag.
 
 It was made to be fast and easy to use.
 
-## How to Use
+## How to Install
 
 To starting using immTagCo, install it with your favorite plugin manager.
 
