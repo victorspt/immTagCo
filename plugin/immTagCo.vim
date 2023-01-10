@@ -139,15 +139,18 @@
      \   g:immTagCoValidTagCharacterPattern
      \ )
 
+   " Stores in a variable if the file being edited is in HTML format:
+:  if !exists("b:isUsingHtmlSyntax")
+:    let b:isUsingHtmlSyntax = (
+       \ &filetype =~? '\%(html\|xml\|svelte\|vue\|jsx\|tsx\|php\)')
+:  endif
+
    " Checks if the tag needs a closing tag:
-:  if (exists("b:isUsingHtmlSyntax") && b:isUsingHtmlSyntax)
+:  if b:isUsingHtmlSyntax
 :    let isVoidElement = index(g:immTagCoVoidElements, tagText, 0, 1) >= 0
 :    if isVoidElement
 :      return
 :    endif
-:  else
-:    let b:isUsingHtmlSyntax = (
-       \ &filetype =~? '\%(html\|xml\|svelte\|vue\|jsx\|tsx\|php\)')
 :  endif
 
    " Searches for the position of the closing angle bracket of the closest
