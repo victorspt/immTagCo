@@ -1,0 +1,4 @@
+# Vim swap files, backup files, and undo history:
+*.swp
+*~$
+
