@@ -38,10 +38,10 @@ the opening tag is written.
 
 There are a few global variables in Vim that control how the plugin behaves.
 
-`g:turn_immTagCo_on`
+`g:turnOffImmTagCo`
 
-Default value: "1"
+Default value: "0"
 
-This variable is used to turn the plugin on when it is assigned the value of 
-"1" or to turn it off when assigned the value of "0".
+This variable is used to turn the plugin off when it is assigned the value of 
+"1". The default value of "0" is used to keep the plugin turned on.
 
