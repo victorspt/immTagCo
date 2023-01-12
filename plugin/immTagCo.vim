@@ -98,6 +98,14 @@
 :  let g:immTagCoMaxTagTextLength = 20
 :endfunction
 
+:function immTagCo#saveUseOfHtmlInBuffer()
+   " Saves in a buffer variable if the file being edited is in HTML format:
+:  if !exists("b:isUsingHtmlSyntax")
+:    let b:isUsingHtmlSyntax = (
+       \ &filetype =~? '\%(html\|xml\|svelte\|vue\|jsx\|tsx\|php\)')
+:  endif
+:endfunction
+
 " Main function, does the tag completion.
 :function immTagCo#CompleteImmediateTag()
    " Stops if the plugin is turned off:
@@ -139,11 +147,8 @@
      \   g:immTagCoValidTagCharacterPattern
      \ )
 
-   " Stores in a variable if the file being edited is in HTML format:
-:  if !exists("b:isUsingHtmlSyntax")
-:    let b:isUsingHtmlSyntax = (
-       \ &filetype =~? '\%(html\|xml\|svelte\|vue\|jsx\|tsx\|php\)')
-:  endif
+   " Saves in a buffer variable if the file being edited is of HTML type:
+:  s:immTagCo#storeUseOfHtmlInBuffer()
 
    " Checks if the tag needs a closing tag:
 :  if b:isUsingHtmlSyntax
