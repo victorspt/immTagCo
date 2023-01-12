@@ -106,6 +106,11 @@
 :  endif
 :endfunction
 
+" Loads buffer variable used by the plugin:
+:function immTagCo#loadPluginInBuffer()
+:  call immTagCo#saveUseOfHtmlInBuffer()
+:endfunction
+
 " Main function, does the tag completion.
 :function immTagCo#CompleteImmediateTag()
    " Stops if the plugin is turned off:
@@ -146,9 +151,6 @@
      \   tagColumn,
      \   g:immTagCoValidTagCharacterPattern
      \ )
-
-   " Saves in a buffer variable if the file being edited is of HTML type:
-:  s:immTagCo#storeUseOfHtmlInBuffer()
 
    " Checks if the tag needs a closing tag:
 :  if b:isUsingHtmlSyntax
@@ -209,6 +211,7 @@
 :    autocmd TextChangedI,TextChangedP 
        \ *.html,*.xml,*.js,*.svelte,*.vue,*.jsx,*.tsx,*.php call
        \ immTagCo#RestoreCursor()
+     autocmd FileType * call immTagCo#loadPluginInBuffer()
 :  augroup END
 
    " Initializes variables used in the script:
