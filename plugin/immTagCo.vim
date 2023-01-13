@@ -97,6 +97,8 @@
 :  let g:immTagCoMaxNumberOfLinesToSearch = 10
 :  let g:immTagCoMaxTagTextLength = 20
 :  let g:turnOffImmTagCo = 0
+:  let g:immTagCoSupportedFiletypes = ["html", "xml", "js", "svelte", "vue",
+     \ "jsx", "tsx", "php"]
 :endfunction
 
 :function immTagCo#saveUseOfHtmlInBuffer()
