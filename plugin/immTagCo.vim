@@ -96,6 +96,7 @@
      \ "nextid", "param", "plaintext", "wbr"]
 :  let g:immTagCoMaxNumberOfLinesToSearch = 10
 :  let g:immTagCoMaxTagTextLength = 20
+:  let g:turnOffImmTagCo = 0
 :endfunction
 
 :function immTagCo#saveUseOfHtmlInBuffer()
@@ -114,7 +115,7 @@
 " Main function, does the tag completion.
 :function immTagCo#CompleteImmediateTag()
    " Stops if the plugin is turned off:
-:  if (exists("g:turnOffImmTagCo") && g:turnOffImmTagCo)
+:  if g:turnOffImmTagCo
 :    return
 :  endif
 
