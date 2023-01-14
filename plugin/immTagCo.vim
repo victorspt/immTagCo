@@ -114,6 +114,26 @@
 :  call immTagCo#saveUseOfHtmlInBuffer()
 :endfunction
 
+" Moves the cursor to the column between the opening and closing tags.
+:function immTagCo#RestoreCursor()
+:  if !s:hasToMoveCursorAfterOpeningTag
+:    return
+:  endif
+
+:  execute('normal ' . repeat('h', s:lastTagLength))
+
+:  let s:hasToMoveCursorAfterOpeningTag = 0
+:  let s:lastTagLength = 0
+:endfunction
+
+:function s:addAutocmdToRestoreCursor()
+:  augroup immTagCoGroup
+:    autocmd TextChangedI,TextChangedP
+     \ *.html,*.xml,*.js,*.svelte,*.vue,*.jsx,*.tsx,*.php once call
+     \ immTagCo#RestoreCursor()
+:  augroup END
+:endfunction
+
 " Main function, does the tag completion.
 :function immTagCo#CompleteImmediateTag()
    " Stops if the plugin is turned off:
@@ -196,20 +216,10 @@
 :  let s:hasToMoveCursorAfterOpeningTag = 1
 :  let s:lastTagLength = len(tagText) + 3
 
+:  call s:addAutocmdToRestoreCursor()
+
    " Restores the setting to its value at the start:
 :  let &cpo = savedCpo
-:endfunction
-
-" Moves the cursor to the column between the opening and closing tags.
-:function immTagCo#RestoreCursor()
-:  if !s:hasToMoveCursorAfterOpeningTag
-:    return
-:  endif
-
-:  execute('normal ' . repeat('h', s:lastTagLength))
-
-:  let s:hasToMoveCursorAfterOpeningTag = 0
-:  let s:lastTagLength = 0
 :endfunction
 
 " Initializes the plugin:
@@ -223,9 +233,6 @@
 :    autocmd!
 :    autocmd InsertCharPre *.html,*.xml,*.js,*.svelte,*.vue,*.jsx,*.tsx,*.php
        \ call immTagCo#CompleteImmediateTag()
-:    autocmd TextChangedI,TextChangedP 
-       \ *.html,*.xml,*.js,*.svelte,*.vue,*.jsx,*.tsx,*.php call
-       \ immTagCo#RestoreCursor()
      autocmd FileType * call immTagCo#loadPluginInBuffer()
 :  augroup END
 
