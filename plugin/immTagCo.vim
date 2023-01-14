@@ -231,8 +231,7 @@
 "  Registers the appropriate functions to the events of inserting a character
 :  augroup immTagCoGroup
 :    autocmd!
-:    autocmd InsertCharPre *.html,*.xml,*.js,*.svelte,*.vue,*.jsx,*.tsx,*.php
-       \ call immTagCo#CompleteImmediateTag()
+:    autocmd InsertCharPre * call immTagCo#CompleteImmediateTag()
      autocmd FileType * call immTagCo#loadPluginInBuffer()
 :  augroup END
 
