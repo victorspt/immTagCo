@@ -121,6 +121,18 @@
 :    return
 :  endif
 
+:  let fileExtension = expand("%:e")
+:  let isExtensionSupported =
+     / index(g:immTagCoSupportedFiletypes, fileExtension, 0, 1) >= 0
+:  let isFiletypeSupported = index(g:immTagCoSupportedFiletypes, &filetype, 0, 1) >= 0
+:  let isCurrentFileSupported = isExtensionSupported || isFiletypeSupported
+
+   " Stops if both the extension and the filetype of the current file are not
+   " supported by the plugin:
+:  if !isCurrentFileSupported
+:    return
+:  endif
+
    " Stops if the last inserted character is not a closing character:
 :  let isClosingCharacter = v:char ==? ">"
 :  if !isClosingCharacter
