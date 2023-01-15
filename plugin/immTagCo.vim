@@ -1,5 +1,5 @@
 " Vim plugin for completing the closest HTML or XML opening tag.
-" Last Changed: 2022 Jan 01
+" Last Changed: 2023 Jan 15
 " Maintainer: Victor S.
 " License: This file is placed in the public domain.
 
@@ -134,6 +134,17 @@
 :  augroup END
 :endfunction
 
+" Returns true if either the extension or the filetype of the current file is
+" supported by the plugin:
+:function s:isCurrentFileSupported()
+:  let fileExtension = expand("%:e")
+:  let isExtensionSupported =
+     \ index(g:immTagCoSupportedFiletypes, fileExtension, 0, 1) >= 0
+:  let isFiletypeSupported = index(g:immTagCoSupportedFiletypes, &filetype, 0, 1) >= 0
+:  let isCurrentFileSupported = isExtensionSupported || isFiletypeSupported
+:  return isCurrentFileSupported
+:endfunction
+
 " Main function, does the tag completion.
 :function immTagCo#CompleteImmediateTag()
    " Stops if the plugin is turned off:
@@ -141,14 +152,9 @@
 :    return
 :  endif
 
-:  let fileExtension = expand("%:e")
-:  let isExtensionSupported =
-     / index(g:immTagCoSupportedFiletypes, fileExtension, 0, 1) >= 0
-:  let isFiletypeSupported = index(g:immTagCoSupportedFiletypes, &filetype, 0, 1) >= 0
-:  let isCurrentFileSupported = isExtensionSupported || isFiletypeSupported
-
    " Stops if both the extension and the filetype of the current file are not
    " supported by the plugin:
+:  let isCurrentFileSupported = s:isCurrentFileSupported()
 :  if !isCurrentFileSupported
 :    return
 :  endif
