@@ -129,7 +129,7 @@
 :function s:addAutocmdToRestoreCursor()
 :  augroup immTagCoGroup
 :    autocmd TextChangedI,TextChangedP
-     \ *.html,*.xml,*.js,*.svelte,*.vue,*.jsx,*.tsx,*.php once call
+     \ *.html,*.xml,*.js,*.svelte,*.vue,*.jsx,*.tsx,*.php ++once call
      \ immTagCo#RestoreCursor()
 :  augroup END
 :endfunction
