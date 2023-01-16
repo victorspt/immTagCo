@@ -1,5 +1,5 @@
 " Vim plugin for completing the closest HTML or XML opening tag.
-" Last Changed: 2023 Jan 15
+" Last Changed: 2023 Jan 16
 " Maintainer: Victor S.
 " License: This file is placed in the public domain.
 
@@ -87,8 +87,7 @@
 
 " Saves settings into global variables to allow modifications by the user:
 :function s:LoadScriptSettings()
-:  let s:hasToMoveCursorAfterOpeningTag = 0
-:  let s:lastTagLength = 0
+:  let s:closingTagLength = 0
 
 :  let g:immTagCoValidTagCharacterPattern = '\%(\a\|\d\|:\|_\|-\)'
 :  let g:immTagCoVoidElements = ["!DOCTYPE", "area", "base", "basefont", "br",
@@ -116,14 +115,7 @@
 
 " Moves the cursor to the column between the opening and closing tags.
 :function immTagCo#RestoreCursor()
-:  if !s:hasToMoveCursorAfterOpeningTag
-:    return
-:  endif
-
-:  execute('normal ' . repeat('h', s:lastTagLength))
-
-:  let s:hasToMoveCursorAfterOpeningTag = 0
-:  let s:lastTagLength = 0
+:  execute('normal ' . repeat('h', s:closingTagLength))
 :endfunction
 
 :function s:addAutocmdToRestoreCursor()
@@ -218,10 +210,8 @@
    " Inserts the closing tag of the closest opening tag:
 :  call s:InsertClosingTag(tagText)
 
-   " Information used to position the cursor after the opening tag:
-:  let s:hasToMoveCursorAfterOpeningTag = 1
-:  let s:lastTagLength = len(tagText) + 3
-
+   " Positions the cursor between the opening and closing tags:
+:  let s:closingTagLength = len(tagText) + 3
 :  call s:addAutocmdToRestoreCursor()
 
    " Restores the setting to its value at the start:
