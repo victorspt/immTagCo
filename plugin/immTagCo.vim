@@ -100,19 +100,6 @@
      \ "jsx", "tsx", "php"]
 :endfunction
 
-:function immTagCo#saveUseOfHtmlInBuffer()
-   " Saves in a buffer variable if the file being edited is in HTML format:
-:  if !exists("b:isUsingHtmlSyntax")
-:    let b:isUsingHtmlSyntax = (
-       \ &filetype =~? '\%(html\|xml\|svelte\|vue\|jsx\|tsx\|php\)')
-:  endif
-:endfunction
-
-" Loads buffer variable used by the plugin:
-:function immTagCo#loadPluginInBuffer()
-:  call immTagCo#saveUseOfHtmlInBuffer()
-:endfunction
-
 " Moves the cursor to the column between the opening and closing tags.
 :function immTagCo#RestoreCursor()
 :  execute('normal ' . repeat('h', s:closingTagLength))
@@ -186,11 +173,9 @@
      \ )
 
    " Checks if the tag needs a closing tag:
-:  if b:isUsingHtmlSyntax
-:    let isVoidElement = index(g:immTagCoVoidElements, tagText, 0, 1) >= 0
-:    if isVoidElement
-:      return
-:    endif
+:  let isVoidElement = index(g:immTagCoVoidElements, tagText, 0, 1) >= 0
+:  if isVoidElement
+:    return
 :  endif
 
    " Searches for the position of the closing angle bracket of the closest
@@ -228,7 +213,6 @@
 :  augroup immTagCoGroup
 :    autocmd!
 :    autocmd InsertCharPre * call immTagCo#CompleteImmediateTag()
-     autocmd FileType * call immTagCo#loadPluginInBuffer()
 :  augroup END
 
    " Initializes variables used in the script:
